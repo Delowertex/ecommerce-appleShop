@@ -25,7 +25,7 @@ class UserController extends Controller
         $OTP = $request->OTP;
         $varification = User::where('email', $UserEmail)->where('otp', $OTP)->first();
         if($varification){
-            User::where('email',$UserEmail)->where('otp', $OTP)->first();
+            User::where('email',$UserEmail)->where('otp', $OTP)->updata(['otp'=>'0']);
         }
     }
 }
