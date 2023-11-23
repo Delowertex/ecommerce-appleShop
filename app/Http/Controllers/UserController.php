@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Helper\JWTToken;
 use Illuminate\Http\Request;
 use App\Helper\ResponseHelper;
 use App\Mail\OTPMail;
@@ -30,7 +30,15 @@ class UserController extends Controller
         $OTP = $request->OTP;
         $varification = User::where('email', $UserEmail)->where('otp', $OTP)->first();
         if($varification){
-            User::where('email',$UserEmail)->where('otp', $OTP)->updata(['otp'=>'0']);
+            User::where('email',$UserEmail)->where('otp', $OTP)->update(['otp'=>'0']);
+            $token = JWTToken::CreateToken($UserEmail, $varification->id);
+            return ResponseHelper::Out('Success',"", 200)->cookie('token', $token, 60*60*30);
+        }else{
+            return ResponseHelper::Out('Failed!', Null, 401);
         }
+    }
+
+    public function UserLogout(){
+        return redirect('/')->cookie('token', -1);
     }
 }

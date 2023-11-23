@@ -35,5 +35,5 @@ Route::get('/PolicyByType/{type}', [PolicyController::class, 'PolicyByType']);
 
 //User Auth
 Route::get('/UserLogin/{UserEmail}', [UserController::class, 'UserLogin']);
-Route::get('/VarifyLogin/{UserEmail}/{otp}', [UserController::class, 'VarifyLogin']);
-Route::get('/Logout', [UserController::class, 'Logout']);
+Route::get('/VarifyLogin/{UserEmail}/{OTP}', [UserController::class, 'VarifyLogin']);
+Route::get('/Logout', [UserController::class, 'UserLogout']);
