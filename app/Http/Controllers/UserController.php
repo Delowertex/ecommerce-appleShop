@@ -3,20 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Helper\ResponseHeader;
+use App\Helper\ResponseHelper;
+use App\Mail\OTPMail;
+use App\Models\User;
+use Exception;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
     public function UserLogin(Request $request){ 
         try {
-            $UserEmail = $request->UserEmail;
-            $OTP = rand(100000, 999999);
-            $details = ['code'=> $OTP];
+            $UserEmail=$request->UserEmail;
+            $OTP=rand (100000,999999);
+            $details = ['code' => $OTP];
             Mail::to($UserEmail)->send(new OTPMail($details));
-            User::updateOrCreate(['email'=>$UserEmail], ['email'=>$UserEmail , 'OTP'=>$OTP]);
-            return ResponseHelper::Out('Success', 'A 6 disit OTP sent to your email!', 200);
+            User::updateOrCreate(['email' => $UserEmail], ['email'=>$UserEmail,'otp'=>$OTP]);
+            return ResponseHelper::Out('success',"A 6 Digit OTP has been send to your email address",200);
         } catch (Exception $e) {
-            return ResponseHelper::Out('fail',$e,200);
+            return ResponseHelper::Out('failed!',$e,200);
         }
     }
 
