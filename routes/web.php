@@ -6,6 +6,8 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PolicyController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\TokenAuthenticateMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,3 +39,7 @@ Route::get('/PolicyByType/{type}', [PolicyController::class, 'PolicyByType']);
 Route::get('/UserLogin/{UserEmail}', [UserController::class, 'UserLogin']);
 Route::get('/VarifyLogin/{UserEmail}/{OTP}', [UserController::class, 'VarifyLogin']);
 Route::get('/Logout', [UserController::class, 'UserLogout']);
+
+// User Profile
+Route::post('/CreateProfile', [ProfileController::class, 'CreateProfile'])->middleware([TokenAuthenticateMiddleware::class]);
+Route::get('/ReadProfile', [ProfileController::class, 'ReadProfile'])->middleware([TokenAuthenticateMiddleware::class]);
