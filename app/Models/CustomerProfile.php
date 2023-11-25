@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CustomerProfile extends Model
 {
+    protected $table = '_customer_profiles';
     protected $fillable = [
         'cus_name',
         'cus_add',
